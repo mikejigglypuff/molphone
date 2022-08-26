@@ -7,4 +7,7 @@ export const checkCollision = (player, dir, vision) => {
         return true;
     } 
   }
+  return false;
 };
+
+export const apps = ['internet', 'streaming', 'messenger', 'game'];

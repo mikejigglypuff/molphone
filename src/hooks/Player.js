@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState } from 'react';
+import { apps } from '../Utilities';
 
 const Player = () => {
   const [player, setPlayer] = useState({
@@ -25,9 +26,29 @@ const Player = () => {
       width: 0,
       height: 0,
     },
+    margin: 0,
   });
 
-  return [player, setPlayer, funnies, setFunnies];
+  const togglePlaying = () => {
+    setPlayer((cur) => ({
+      ...cur,
+      playing: !cur.playing,
+    }));
+  };
+
+  const changeFunnies = (k) => {
+    setFunnies((cur) => ({
+      ...cur,
+      funny: (() => {
+        const newfunny = cur.funny.slice();
+        
+      }),
+      playing: apps[k],
+    }));
+  };
+
+  return [player, setPlayer, funnies, setFunnies, 
+    togglePlaying, changeFunnies];
 }
 
 export default Player;

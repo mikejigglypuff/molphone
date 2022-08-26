@@ -4,10 +4,9 @@ import Player from '../hooks/Player';
 import Teacher from '../hooks/Teacher';
 import { checkCollision } from '../Utilities';
 
-const apps = ['internet', 'streaming', 'messenger', 'game'];
-
 const Game = () => {
-  const [player, setPlayer, funnies, setFunnies] = Player();
+  const [player, setPlayer, funnies, setFunnies, 
+    togglePlaying] = Player();
   const [teacher, setTeacher, vision, setVision] = Teacher();
   const canvas = useRef(null);
 
@@ -20,22 +19,23 @@ const Game = () => {
 
     setFunnies({
       curfunny: null,
-      funny: [0, 0, 0, 0],
+      funny: [20, 20, 20, 20],
       maxfunny: [100, 100, 100, 100],
       pos: { x: 25, y: 10, }, 
-      size: { width: 400, height: 50, },
+      size: { width: 400, height: 30, },
+      margin: 10,
     });
 
     setTeacher({
-      pos: { x: 150, y: 180, }, 
+      pos: { x: 150, y: 280, }, 
       size: { width: 90, height: 95, },
       dir: 1,
     });
 
     setVision({
-      pos: { x: 400, y: 500, },
+      pos: { x: 400, y: 600, },
       size: { width: 150, height: 200, },
-      start: { x: 185, y: 219, width: 20, height: 16, },
+      start: { x: 185, y: 319, width: 20, height: 16, },
     });
 
     document.addEventListener('keydown', keydownhandle, false);
@@ -46,29 +46,15 @@ const Game = () => {
     if(player.playing === true) {
       if(e.keyCode >= 49 && e.keyCode <= 52) {
         const k = e.keyCode - 49;
-        setFunnies((cur) => ({
-          ...cur,
-          funny: (() => {
-            return [
-              ...cur.funny.slice(0, k),
-              ...[cur.funny[k] + 1],
-              ...cur.funny.slice(Math.min((k + 1), 3)),
-            ];
-          }),
-          playing: apps[k],
-        }));
+        
       }
     }
   };
 
   const keyuphandle = (e) => {
     if(e.keyCode === 90) {
-      setPlayer((cur) => ({
-        ...cur,
-        playing: !cur.playing,
-      }));
-      console.log(player.playing);
-      if(checkCollision(player, teacher.dir, vision)) {
+      togglePlaying();
+      if(checkCollision(player, teacher.dir, vision) === true) {
         console.log('collided');
       }
     }
@@ -132,18 +118,42 @@ const Game = () => {
     }
   };
 
+  const drawfunny = (ctx) => {
+    var i;
+    for(i = 0; i < 4; i++) {
+      ctx.beginPath();
+      ctx.fillStyle = 'DodgerBlue';
+      ctx.strokeStyle = 'MidnightBlue';
+      ctx.rect(funnies.pos.x, funnies.pos.y + (funnies.size.height + funnies.margin) * i, 
+        funnies.size.width, funnies.size.height);
+      ctx.fill();
+      ctx.stroke();
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.fillStyle = 'DarkTurquoise';
+      ctx.rect(funnies.pos.x, funnies.pos.y + (funnies.size.height + funnies.margin) * i, 
+        Math.floor(funnies.size.width * funnies.funny[i] / funnies.maxfunny[i]), funnies.size.height);
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    
+  };
+
   const draw = (ctx) => {
     ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
     drawplayer(ctx);
     drawteacher(ctx);
     drawvision(ctx);
+    drawfunny(ctx);
   };
 
   useEffect(() => {
     const ctx = canvas.current.getContext('2d');
     draw(ctx);
 
-  }, [player, teacher]);
+  }, [player, teacher, funnies, vision]);
 
   return (
     <div>
