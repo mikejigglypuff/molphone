@@ -1,32 +1,32 @@
 import { useState } from 'react';
 import { apps } from '../Utilities';
 
-const Player = () => {
+const Player = props => {
   const [player, setPlayer] = useState({
     pos: {
-      x: 0,
-      y: 0,
+      x: props.player.pos.x,
+      y: props.player.pos.y,
     },
     size: {
-      width: 0,
-      height: 0,
+      width: props.player.size.width,
+      height: props.player.size.height,
     },
-    playing: false,
+    playing: props.player.playing,
   });
 
   const [funnies, setFunnies] = useState({
-    curfunny: null,
-    funny: [0, 0, 0, 0],
-    maxfunny: [0, 0, 0, 0],
+    curfunny: props.funnies.curfunny,
+    funny: props.funnies.funny,
+    maxfunny: props.funnies.maxfunny,
     pos: {
-      x: 0,
-      y: 0,
+      x: props.funnies.pos.x,
+      y: props.funnies.pos.y,
     },
     size: {
-      width: 0,
-      height: 0,
+      width: props.funnies.size.width,
+      height: props.funnies.size.height,
+      margin: props.funnies.size.margin,
     },
-    margin: 0,
   });
 
   const togglePlaying = () => {
@@ -36,14 +36,14 @@ const Player = () => {
     }));
   };
 
-  const changeFunnies = (k) => {
+  const changeFunnies = (num, funnies) => {
+    const newfunny = funnies.funny.slice();
+    newfunny[num] += 5;
+
     setFunnies((cur) => ({
       ...cur,
-      funny: (() => {
-        const newfunny = cur.funny.slice();
-        
-      }),
-      playing: apps[k],
+      funny: newfunny,
+      curfunny: apps[num],
     }));
   };
 

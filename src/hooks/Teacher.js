@@ -1,32 +1,32 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
-const Teacher = () => {
+const Teacher = props => {
   const [teacher, setTeacher] = useState({
     pos: {
-      x: 0,
-      y: 0,
+      x: props.teacher.pos.x,
+      y: props.teacher.pos.y,
     },
     size: {
-      width: 0,
-      height: 0,
+      width: props.teacher.size.width,
+      height: props.teacher.size.height,
     },
-    dir: -1,
+    dir: props.teacher.dir,
   });
 
   const [vision, setVision] = useState({
     pos: {
-      x: 0,
-      y: 0,
+      x: props.vision.pos.x,
+      y: props.vision.pos.y,
     },
     size: {
-      width: 0,
-      height: 0,
+      width: props.vision.size.width,
+      height: props.vision.size.height,
     },
     start: {
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
+      x: props.vision.start.x,
+      y: props.vision.start.y,
+      width: props.vision.start.width,
+      height: props.vision.start.height,
     },
   });
 
