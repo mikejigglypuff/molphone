@@ -1,4 +1,4 @@
-export const drawplayer = (ctx, player) => {
+const drawplayer = (ctx, player) => {
   ctx.beginPath();
   ctx.rect(player.pos.x, player.pos.y, player.size.width, player.size.height);
   ctx.fillStyle = (player.playing === true) ? 'IndianRed' : 'LightSkyBlue';
@@ -6,7 +6,7 @@ export const drawplayer = (ctx, player) => {
   ctx.closePath();
 };
 
-export const drawteacher = (ctx, teacher) => {
+const drawteacher = (ctx, teacher) => {
   ctx.beginPath();
   ctx.rect(teacher.pos.x, teacher.pos.y, teacher.size.width, teacher.size.height);
   ctx.fillStyle = (teacher.dir === 1) ? 'Blue' : 'DarkBlue';
@@ -14,7 +14,7 @@ export const drawteacher = (ctx, teacher) => {
   ctx.closePath();
 };
 
-export const drawvision = (ctx, vision, dir) => {
+const drawvision = (ctx, vision, dir) => {
   if(dir === 1) {
     ctx.beginPath();
     ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
@@ -55,7 +55,7 @@ export const drawvision = (ctx, vision, dir) => {
   }
 };
 
-export const drawfunny = (ctx, funnies) => {
+const drawfunny = (ctx, funnies) => {
   var i;
   for(i = 0; i < 4; i++) {
     ctx.beginPath();
@@ -76,10 +76,40 @@ export const drawfunny = (ctx, funnies) => {
   }
 };
 
-export const draw = (canvas, ctx, player, funnies, teacher, vision) => {
+const drawphone = (ctx, player, phone) => {
+  if(player.playing) {
+    ctx.beginPath();
+    ctx.fillStyle = 'Black';
+    ctx.rect(phone.pos.x, phone.pos.y, phone.size.width, phone.size.height);
+    ctx.fill();
+    ctx.closePath();
+
+    if(phone.display.turning) {
+      ctx.beginPath();
+      ctx.fillStyle = 'LightGreen';
+      ctx.rect(phone.display.pos.x, phone.display.pos.y, 
+        phone.display.size.width, phone.display.size.height);
+      ctx.fill();
+      ctx.closePath();
+
+      var i;
+      for(i = 0; i < 4; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = phone.apps.color[i];
+        ctx.rect(phone.apps.pos.x[i], phone.apps.pos.y[i], 
+          phone.apps.size.width, phone.apps.size.height);
+        ctx.fill();
+        ctx.closePath();
+      }
+    }
+  }
+};
+
+export const draw = (canvas, ctx, player, funnies, teacher, vision, phone) => {
   ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
   drawplayer(ctx, player);
   drawteacher(ctx, teacher);
   drawvision(ctx, vision, teacher.dir);
   drawfunny(ctx, funnies);
+  drawphone(ctx, player, phone);
 };

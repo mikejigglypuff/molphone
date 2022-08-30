@@ -36,15 +36,17 @@ const Player = props => {
     }));
   };
 
-  const changeFunnies = (num, funnies) => {
-    const newfunny = funnies.funny.slice();
-    newfunny[num] += 5;
+  const changeFunnies = (num, player, funnies) => {
+    if(player.playing) {
+      const newfunny = funnies.funny.slice();
+      newfunny[num] = Math.min(newfunny[num] + 5, funnies.maxfunny[num]);
 
-    setFunnies((cur) => ({
-      ...cur,
-      funny: newfunny,
-      curfunny: apps[num],
-    }));
+      setFunnies((cur) => ({
+        ...cur,
+        funny: newfunny,
+        curfunny: apps[num],
+      }));
+    }
   };
 
   return [player, setPlayer, funnies, setFunnies, 
