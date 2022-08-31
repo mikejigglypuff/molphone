@@ -14,6 +14,9 @@ export const Smartphone = props => {
       size: { width: props.apps.size.width, height: props.apps.size.height },
       color: props.apps.color,
       margin: props.apps.margin,
+      font: props.apps.font,
+      text: props.apps.text,
+      textcolor: props.apps.textcolor,
     },
   });
 

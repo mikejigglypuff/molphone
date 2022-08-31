@@ -49,12 +49,16 @@ const Game = () => {
       size: { width: 15, height: 15 },
       color: ['LightSkyBlue', 'Crimson', 'MediumSlateBlue', 'LightSeaGreen'],
       margin: 4,
+      font: '6px Arial',
+      text: ['인터넷', '우두부', '라인언', '게임'],
+      textcolor: '#FFFFFF',
     },
   });
 
   const [keyinputs, setKeyinputs] = useState({ inputed: false, key: null, });
   const [mouseinputs, setMouseinputs] = useState({ x: null, y: null, });
   const canvas = useRef(null);
+  const canvasimage = null;
 
   useEffect(() => {
     document.addEventListener('keydown', keydownhandle);
@@ -82,6 +86,7 @@ const Game = () => {
 
   useEffect(() => {
     const ctx = canvas.current.getContext('2d');
+
     if(keyinputs.inputed) {
       changeFunnies(keyinputs.key, player, funnies);
       setKeyinputs((cur) => ({ inputed: !cur.inputed, key: null}));
@@ -93,7 +98,8 @@ const Game = () => {
       setMouseinputs(() => ({ x: null, y: null }));
     }
 
-    draw(canvas, ctx, player, funnies, teacher, vision, phone);
+    ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
+    draw(canvas, ctx, player, funnies, teacher, vision, phone, canvasimage);
 
   }, [player, teacher, funnies, vision, keyinputs, mouseinputs]);
 

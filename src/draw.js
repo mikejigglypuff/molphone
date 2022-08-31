@@ -100,16 +100,30 @@ const drawphone = (ctx, player, phone) => {
           phone.apps.size.width, phone.apps.size.height);
         ctx.fill();
         ctx.closePath();
+        ctx.font = phone.apps.font;
+        ctx.fillStyle = phone.apps.textcolor;
+        ctx.textAlign = "center";
+        ctx.fillText(phone.apps.text[i], phone.apps.pos.x[i] + Math.floor(phone.apps.size.width / 2),
+        phone.apps.pos.y[i] + phone.apps.size.height + phone.apps.margin);
       }
     }
   }
 };
 
-export const draw = (canvas, ctx, player, funnies, teacher, vision, phone) => {
-  ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
-  drawplayer(ctx, player);
-  drawteacher(ctx, teacher);
-  drawvision(ctx, vision, teacher.dir);
-  drawfunny(ctx, funnies);
-  drawphone(ctx, player, phone);
+export const draw = (canvas, ctx, player, funnies, teacher, vision, phone, canvasimage) => {
+  var context = document.createElement('canvas').getContext('2d');
+  context.canvas.width = window.innerWidth;
+  context.canvas.height = window.innerHeight;
+  drawplayer(context, player);
+  drawteacher(context, teacher);
+  drawvision(context, vision, teacher.dir);
+  drawfunny(context, funnies);
+  drawphone(context, player, phone);
+  canvasimage = new Image();
+  canvasimage.src = context.canvas.toDataURL('image/png');
+  context = null;
+  canvasimage.onload = () => {
+    ctx.drawImage(canvasimage, 0, 0, 500, 500, 0, 0, 300, 300);
+    console.log('printed');
+  }
 };
