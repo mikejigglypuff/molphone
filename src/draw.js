@@ -111,19 +111,11 @@ const drawphone = (ctx, player, phone) => {
 };
 
 export const draw = (canvas, ctx, player, funnies, teacher, vision, phone, canvasimage) => {
-  var context = document.createElement('canvas').getContext('2d');
-  context.canvas.width = window.innerWidth;
-  context.canvas.height = window.innerHeight;
-  drawplayer(context, player);
-  drawteacher(context, teacher);
-  drawvision(context, vision, teacher.dir);
-  drawfunny(context, funnies);
-  drawphone(context, player, phone);
-  canvasimage = new Image();
-  canvasimage.src = context.canvas.toDataURL('image/png');
-  context = null;
-  canvasimage.onload = () => {
-    ctx.drawImage(canvasimage, 0, 0, 500, 500, 0, 0, 300, 300);
-    console.log('printed');
-  }
+  ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
+  drawplayer(ctx, player);
+  drawteacher(ctx, teacher);
+  drawvision(ctx, vision, teacher.dir);
+  drawfunny(ctx, funnies);
+  drawphone(ctx, player, phone);
+  
 };

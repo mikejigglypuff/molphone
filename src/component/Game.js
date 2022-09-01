@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 
 import Player from '../hooks/Player';
 import Teacher from '../hooks/Teacher';
@@ -55,8 +55,9 @@ const Game = () => {
     },
   });
 
-  const [keyinputs, setKeyinputs] = useState({ inputed: false, key: null, });
+  const [keyinputs, setKeyinputs] = useState({ pressed: false, key: null, });
   const [mouseinputs, setMouseinputs] = useState({ x: null, y: null, });
+  const [zoommoved, setZoommoved] = useState(false);
   const canvas = useRef(null);
   const canvasimage = null;
 
@@ -66,18 +67,14 @@ const Game = () => {
   }, []);
 
   const keydownhandle = (e) => {
-    if(e.keyCode >= 49 && e.keyCode <= 52) {
-      const k = e.keyCode - 49;
-      setKeyinputs(() => ({ inputed: true, key: k, }));
-    }
-    
+    setKeyinputs(() => ({ pressed: true, key: e.keyCode, }));
   }; //이벤트 리스너 콜백 함수에선 state 최신 값을 읽어올 수 없으므로 set으로만 state에 접근해야 함
 
   const keyuphandle = (e) => {
     if(e.keyCode === 90) {
       togglePlaying();
-      console.log(checkCollision(player, teacher.dir, vision));
     }
+    setKeyinputs(() => ({ presseded: false, key: null, }));
   }
 
   const mousedownhandle = (e) => {
@@ -85,12 +82,22 @@ const Game = () => {
   }
 
   useEffect(() => {
-    const ctx = canvas.current.getContext('2d');
+    var ctx = canvas.current.getContext('2d');
 
-    if(keyinputs.inputed) {
-      changeFunnies(keyinputs.key, player, funnies);
-      setKeyinputs((cur) => ({ inputed: !cur.inputed, key: null}));
+    if(keyinputs.pressed) {
+      console.log(keyinputs.key);
+      if(keyinputs.key >= 49 && keyinputs.key <= 52) {
+        changeFunnies(keyinputs.key - 49, player, funnies);
+      } else if(keyinputs.key === 90 && !zoommoved) {
+        setZoommoved(true);
+        ctx.translate(100, 100);
+        console.log('moved');
+      }
     } //이벤트 리스너 대신 useEffect에서 state에 접근
+    else if(zoommoved) {
+      setZoommoved(false);
+      ctx.translate(-100, -100);
+    }
 
     if(mouseinputs.x && mouseinputs.y) {
       const num = appclicked(phone, mouseinputs.x, mouseinputs.y);
@@ -98,7 +105,6 @@ const Game = () => {
       setMouseinputs(() => ({ x: null, y: null }));
     }
 
-    ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
     draw(canvas, ctx, player, funnies, teacher, vision, phone, canvasimage);
 
   }, [player, teacher, funnies, vision, keyinputs, mouseinputs]);
