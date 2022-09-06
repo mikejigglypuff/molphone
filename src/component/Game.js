@@ -55,7 +55,7 @@ const Game = () => {
     },
   });
 
-  const [keyinputs, setKeyinputs] = useState({ pressed: false, key: null, });
+  const [keyinputs, setKeyinputs] = useState(null);
   const [mouseinputs, setMouseinputs] = useState({ x: null, y: null, });
   const [zoommoved, setZoommoved] = useState(false);
   const canvas = useRef(null);
@@ -67,14 +67,14 @@ const Game = () => {
   }, []);
 
   const keydownhandle = (e) => {
-    setKeyinputs(() => ({ pressed: true, key: e.keyCode, }));
+
   }; //이벤트 리스너 콜백 함수에선 state 최신 값을 읽어올 수 없으므로 set으로만 state에 접근해야 함
 
   const keyuphandle = (e) => {
     if(e.keyCode === 90) {
       togglePlaying();
     }
-    setKeyinputs(() => ({ presseded: false, key: null, }));
+    setKeyinputs(e.keyCode);
   }
 
   const mousedownhandle = (e) => {
@@ -84,20 +84,24 @@ const Game = () => {
   useEffect(() => {
     var ctx = canvas.current.getContext('2d');
 
-    if(keyinputs.pressed) {
-      console.log(keyinputs.key);
-      if(keyinputs.key >= 49 && keyinputs.key <= 52) {
-        changeFunnies(keyinputs.key - 49, player, funnies);
-      } else if(keyinputs.key === 90 && !zoommoved) {
+    if(keyinputs) {
+      if(keyinputs >= 49 && keyinputs <= 52) {
+        changeFunnies(keyinputs - 49, player, funnies);
+      } else if(keyinputs === 90 && !zoommoved) {
         setZoommoved(true);
-        ctx.translate(100, 100);
+        ctx.translate(125, 125);
+        ctx.scale(1.25, 1.25);
+        ctx.translate(-200, -200);
         console.log('moved');
+      } else if(keyinputs === 90 && zoommoved) {
+        setZoommoved(false);
+        ctx.translate(200, 200);
+        ctx.scale(0.8, 0.8);
+        ctx.translate(-125, -125);
       }
+      setKeyinputs(null);
     } //이벤트 리스너 대신 useEffect에서 state에 접근
-    else if(zoommoved) {
-      setZoommoved(false);
-      ctx.translate(-100, -100);
-    }
+    
 
     if(mouseinputs.x && mouseinputs.y) {
       const num = appclicked(phone, mouseinputs.x, mouseinputs.y);
