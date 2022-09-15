@@ -1,5 +1,6 @@
-class Funny {
+export class Funny {
   #curfunny
+  //-1 = 플레이 X, 0 = 인터넷, 1 = 유튜브, 2 = 카톡, 3 = 게임
   #funnies
   #maxfunnies
   #pos

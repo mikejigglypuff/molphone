@@ -1,12 +1,16 @@
-class Teacher {
+import { Vision } from "./vision";
+
+export class Teacher {
   #pos
   #size
   #dir
+  #vis
 
-  constructor(pos, size, dir) {
+  constructor(pos, size, dir, vis) {
     this.#pos = pos;
     this.#size = size;
     this.#dir = dir;
+    this.#vis = new Vision(vis[0], vis[1], vis[2]);
   }
 
   get getDir() { return this.#dir; }

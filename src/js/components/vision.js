@@ -1,4 +1,4 @@
-class Vision {
+export class Vision {
   #pos
   #size
   #start 
@@ -31,5 +31,41 @@ class Vision {
     }
   }
 
-  
+  drawvision(ctx) {
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
+    ctx.rect(this.#start[0], this.#start[1], this.#start[2], this.#start[3]);
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(this.#pos[0], this.#pos[1], this.#size[0], this.#size[1]);
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(this.#start[0], this.#start[1]);
+    ctx.lineTo(this.#pos[0], this.#pos[1]);
+    ctx.lineTo(this.#pos[0] + this.#size[0], this.#pos[1]);
+    ctx.lineTo(this.#start[0] + this.#start[2], this.#start[1]);
+    ctx.lineTo(this.#start[0], this.#start[1]);
+    ctx.fill();
+    ctx.closePath();
+
+    if(this.#start[0] + this.#start[2] / 2 > this.#pos[0] + this.#size[0] / 2) {
+      ctx.moveTo(this.#start[0] + this.#start[2], this.#start[1]);
+      ctx.lineTo(this.#pos[0] + this.#size[0], this.#pos[1]);
+      ctx.lineTo(this.#pos[0] + this.#size[0], this.#pos[1] + this.#size[1]);
+      ctx.lineTo(this.#start[0] + this.#start[2], this.#start[1] + this.#start[3]);
+      ctx.lineTo(this.#start[0] + this.#start[2], this.#start[1]);
+    } else if(this.#start[0] + this.#start[2] / 2 < this.#pos[0] + this.#size[0] / 2) {
+      ctx.moveTo(this.#start[0], this.#start[1]);
+      ctx.lineTo(this.#pos[0], this.#pos[1]);
+      ctx.lineTo(this.#pos[0], this.#pos[1] + this.#size[1]);
+      ctx.lineTo(this.#start[0], this.#start[1] + this.#start[3]);
+      ctx.lineTo(this.#start[0], this.#start[1]);
+    }
+    ctx.fill();
+    ctx.closePath();
+  }
 }
