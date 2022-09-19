@@ -1,4 +1,4 @@
-import { Vision } from "./vision";
+import { Vision } from './vision.js';
 
 export class Teacher {
   #pos

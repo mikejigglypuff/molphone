@@ -30,7 +30,7 @@ export class Funny {
       ctx.beginPath();
       ctx.fillStyle = 'DodgerBlue';
       ctx.strokeStyle = 'MidnightBlue';
-      ctx.rect(this.#pos[i][0], this.#pos[i][1] + (this.#size[1] + this.#size[2]) * i, 
+      ctx.rect(this.#pos[0], this.#pos[1] + (this.#size[1] + this.#size[2]) * i, 
         this.#size[0], this.#size[1]);
       ctx.fill();
       ctx.stroke();
@@ -38,7 +38,7 @@ export class Funny {
 
       ctx.beginPath();
       ctx.fillStyle = 'DarkTurquoise';
-      ctx.rect(this.#pos[i][0], this.#pos[i][1] + (this.#size[1] + this.#size[2]) * i,
+      ctx.rect(this.#pos[0], this.#pos[1] + (this.#size[1] + this.#size[2]) * i,
         Math.floor(this.#size[0] * this.#funnies[i] / this.#maxfunnies[i]), this.#size[1]);
       ctx.fill();
       ctx.closePath();
