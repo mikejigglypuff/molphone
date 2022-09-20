@@ -21,6 +21,7 @@ export class Teacher {
     ctx.fillStyle = (this.#dir === 1) ? 'Blue' : 'DarkBlue';
     ctx.fill();
     ctx.closePath();
+    this.#vis.drawvision(ctx);
   }
 
   toggleDir() { this.#dir = !this.#dir; }

@@ -26,6 +26,8 @@ export class Smartphone {
     return -1;
   }
 
+  turning() { this.#display[2] = !this.#display[2]; }
+
   drawPhone(ctx, curfunny) {
     ctx.beginPath();
     ctx.fillStyle = 'Black';
@@ -42,20 +44,20 @@ export class Smartphone {
       ctx.closePath();
 
       switch(curfunny) {
-        case 0:
+        default:
           var i;
           for(i = 0; i < 4; i++) {
             ctx.beginPath();
-            ctx.fillStyle = phone.apps.color[i];
-            ctx.rect(phone.apps.pos.x[i], phone.apps.pos.y[i], 
-              phone.apps.size.width, phone.apps.size.height);
+            ctx.fillStyle = this.#apps[2][i];
+            ctx.rect(this.#apps[0][0][i], this.#apps[0][1][i], 
+              this.#apps[1][0], this.#apps[1][1]);
             ctx.fill();
             ctx.closePath();
-            ctx.font = phone.apps.font;
-            ctx.fillStyle = phone.apps.textcolor;
+            ctx.font = this.#apps[4];
+            ctx.fillStyle = this.#apps[6];
             ctx.textAlign = "center";
-            ctx.fillText(phone.apps.text[i], phone.apps.pos.x[i] + Math.floor(phone.apps.size.width / 2),
-            phone.apps.pos.y[i] + phone.apps.size.height + phone.apps.margin);
+            ctx.fillText(this.#apps[5][i], this.#apps[0][0][i] + Math.floor(this.#apps[1][0] / 2),
+            this.#apps[0][1][i] + this.#apps[1][1] + this.#apps[3]);
           }
           break;
         

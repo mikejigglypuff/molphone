@@ -15,11 +15,12 @@ export class Funny {
   }
 
   get getFunnies() { return this.#funnies; }
-  set setCurfunny(n) { this.#curfunny = n; }
+  get getCurfunny() { return this.#curfunny; }
+  setCurfunny(n) { this.#curfunny = n; }
 
   changeFunnies(n) {
     var cur = this.#curfunny;
-    if(cur >= 1 && cur <= 4) {
+    if(cur >= 0 && cur <= 3) {
       this.#funnies[cur] = Math.min(this.#maxfunnies[cur], this.#funnies[cur] + n);
     }
   }
