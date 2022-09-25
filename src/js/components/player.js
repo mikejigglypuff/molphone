@@ -11,6 +11,8 @@ export class Player {
 
   get getPos() { return this.#pos; }
   get getPlaying() { return this.#playing; }  
+  get getRect() { return this.#pos.concat(this.#size); ;
+  }
 
   togglePlaying() {
     this.#playing = !this.#playing;

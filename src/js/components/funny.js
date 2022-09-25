@@ -1,10 +1,10 @@
 export class Funny {
-  #curfunny
+  #curfunny;
   //-1 = 플레이 X, 0 = 인터넷, 1 = 유튜브, 2 = 카톡, 3 = 게임
-  #funnies
-  #maxfunnies
-  #pos
-  #size
+  #funnies;
+  #maxfunnies;
+  #pos;
+  #size;
 
   constructor(curfunny, funnies, maxfunnies, pos, size) {
     this.#curfunny = curfunny;

@@ -1,7 +1,7 @@
 export class Vision {
-  #pos
-  #size
-  #start 
+  #pos;
+  #size;
+  #start;
   //index 0: start.x, 1: start.y, 2: start.width, 3: start.height
 
   constructor(pos, size, start) {
@@ -13,6 +13,7 @@ export class Vision {
   get getPos() { return this.#pos; }
   get getSize() { return this.#size; }
   get getStart() { return this.#start; }
+  get getRect() { return this.#pos.concat(this.#size); }
 
   setPos(x, y) {
     this.#pos[0] = x;

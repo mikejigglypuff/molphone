@@ -1,9 +1,9 @@
 export class Smartphone {
-  #pos
-  #size
-  #display
+  #pos;
+  #size;
+  #display;
   //0: pos, 1: size, 2: turning on|off
-  #apps
+  #apps;
   //0: pos, 1: size, 2: color, 3: margin, 4: font, 5: text, 6: textcolor
 
   constructor(pos, size, display, apps) {
